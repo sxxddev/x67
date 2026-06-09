@@ -1,0 +1,22 @@
+สวัสดีครับ ลูกค้า in8lx67secre โดเมน x67secretme.shop
+
+ต้องการให้ช่วยเปิดใช้งานเว็บ Next.js (Node.js 18+):
+
+สถานะตอนนี้:
+- อัปโหลดไฟล์ + import MySQL เรียบร้อยแล้ว
+- ลอง SSH เข้า 103.70.5.234 ทั้ง password และ SSH public key แล้ว
+  ได้ข้อความ: Permission denied (publickey,password)
+- ได้เพิ่ม public key ใน DirectAdmin -> SSH Keys -> Authorized Keys แล้ว
+
+ขอความช่วยเหลือ:
+1. เปิด SSH shell สำหรับ user in8lx67secre (port 22)
+   หรือยืนยันว่าแพ็ก Business รองรับ SSH ไหม
+
+2. เปิดเมนู Setup Node.js App / Node.js Selector ใน DirectAdmin
+   เพื่อรัน npm install และ npm start ที่โฟลเดอร์:
+   /domains/x67secretme.shop/nextjs
+   startup file: server.js
+
+3. ถ้าแพ็กนี้รัน Node.js ไม่ได้ แนะนำแพ็ก/VPS ที่รองรับ Next.js
+
+ขอบคุณครับ

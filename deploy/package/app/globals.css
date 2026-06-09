@@ -1,0 +1,411 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+:root {
+  /* Premium Black & White */
+  --background: oklch(0.07 0 0);
+  --foreground: oklch(0.98 0 0);
+  --card: oklch(0.11 0 0);
+  --card-foreground: oklch(0.98 0 0);
+  --popover: oklch(0.10 0 0);
+  --popover-foreground: oklch(0.98 0 0);
+  --primary: oklch(0.98 0 0);
+  --primary-foreground: oklch(0.08 0 0);
+  --secondary: oklch(0.16 0 0);
+  --secondary-foreground: oklch(0.92 0 0);
+  --muted: oklch(0.16 0 0);
+  --muted-foreground: oklch(0.62 0 0);
+  --accent: oklch(0.18 0 0);
+  --accent-foreground: oklch(0.98 0 0);
+  --destructive: oklch(0.55 0.22 27);
+  --destructive-foreground: oklch(0.99 0 0);
+  --success: oklch(0.72 0 0);
+  --success-foreground: oklch(0.08 0 0);
+  --warning: oklch(0.75 0 0);
+  --warning-foreground: oklch(0.12 0 0);
+  --border: oklch(1 0 0 / 0.12);
+  --input: oklch(1 0 0 / 0.08);
+  --ring: oklch(0.85 0 0);
+  --radius: 0.75rem;
+
+  --sidebar: oklch(0.10 0 0);
+  --sidebar-foreground: oklch(0.98 0 0);
+  --sidebar-primary: oklch(0.98 0 0);
+  --sidebar-primary-foreground: oklch(0.08 0 0);
+  --sidebar-accent: oklch(0.16 0 0);
+  --sidebar-accent-foreground: oklch(0.98 0 0);
+  --sidebar-border: oklch(1 0 0 / 0.12);
+  --sidebar-ring: oklch(0.85 0 0);
+}
+
+@theme inline {
+  --font-sans: var(--font-sans-thai), 'Noto Sans Thai', 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'Geist Mono', 'Geist Mono Fallback', monospace;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    font-family: var(--font-sans-thai), "Noto Sans Thai", "Segoe UI", system-ui, sans-serif;
+  }
+
+  html {
+    scrollbar-gutter: stable;
+    background: #000;
+  }
+
+  body {
+    @apply bg-black font-sans font-normal text-foreground;
+    font-feature-settings: "liga" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-medium tracking-tight;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: oklch(0.10 0 0);
+}
+
+::-webkit-scrollbar-thumb {
+  background: oklch(0.35 0 0);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: oklch(0.50 0 0);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes badge-glow {
+  0%, 100% {
+    box-shadow: 0 0 4px oklch(1 0 0 / 0.2);
+  }
+  50% {
+    box-shadow: 0 0 12px oklch(1 0 0 / 0.35);
+  }
+}
+
+.badge-hot {
+  animation: badge-glow 2s ease-in-out infinite;
+}
+
+.premium-glass {
+  @apply rounded-xl border border-white/10 bg-black/40 backdrop-blur-md;
+}
+
+.premium-accent-line {
+  @apply border-l-2 border-white pl-3;
+}
+
+/* --- Route transition (Motion in PageTransition + overlay) --- */
+.app-page-root {
+  transform-origin: top center;
+}
+
+.site-route-overlay {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9990;
+  background: #000;
+  opacity: 0;
+  transition: opacity 0.48s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.site-route-overlay.is-active {
+  opacity: 0.58;
+  transition-duration: 0.44s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-route-overlay {
+    transition: none;
+  }
+}
+
+/* หน้าแรก — ช่องค้นหา hero 520×48 */
+.hero2-search {
+  width: 520px;
+  height: 48px;
+  max-width: 100%;
+}
+
+.hero2-search .hero-search-input {
+  width: 520px;
+  height: 48px;
+  max-width: 100%;
+}
+
+/* --- Product card hover lift --- */
+.hover-card {
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.hover-card:hover:not(.hover-card--disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.75);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Product card hover — sparkle + orbit dots + logo
+   ═══════════════════════════════════════════════════════════ */
+
+.product-card-image--hovered {
+  transform: scale(1.1);
+  filter: brightness(0.2) blur(2px);
+}
+
+.atom-orbit-overlay {
+  background: radial-gradient(
+    circle at center,
+    rgba(0, 0, 0, 0.45) 0%,
+    rgba(0, 0, 0, 0.78) 100%
+  );
+}
+
+/* ── จุดแสงวิ่งรอบกลาง (ไม่มีวงแหวน) ── */
+.product-orbit-loader {
+  perspective: 1000px;
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+  transform: rotate(45deg);
+  pointer-events: none;
+  z-index: 4;
+}
+
+.product-orbit-loader::before,
+.product-orbit-loader::after {
+  content: "";
+  border-radius: 50%;
+  animation: productOrbitSpin 1s linear infinite;
+  display: block;
+  position: absolute;
+  inset: 0;
+  transform: rotateX(70deg);
+}
+
+.product-orbit-loader::after {
+  animation-delay: 0.4s;
+  transform: rotateY(70deg);
+}
+
+@keyframes productOrbitSpin {
+  0%,
+  100% {
+    box-shadow: 0.22em 0 0.1em var(--atom-color, #00ff99);
+  }
+  12% {
+    box-shadow: 0.22em 0.22em 0.1em var(--atom-color, #00ff99);
+  }
+  25% {
+    box-shadow: 0 0.22em 0.1em var(--atom-color, #00ff99);
+  }
+  37% {
+    box-shadow: -0.22em 0.22em 0.1em var(--atom-color, #00ff99);
+  }
+  50% {
+    box-shadow: -0.22em 0 0.1em var(--atom-color, #00ff99);
+  }
+  62% {
+    box-shadow: -0.22em -0.22em 0.1em var(--atom-color, #00ff99);
+  }
+  75% {
+    box-shadow: 0 -0.22em 0.1em var(--atom-color, #00ff99);
+  }
+  87% {
+    box-shadow: 0.22em -0.22em 0.1em var(--atom-color, #00ff99);
+  }
+}
+
+/* ── Sparkle particles ── */
+.sparkle-dot {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow:
+    0 0 6px #fff,
+    0 0 12px var(--atom-color, #00ff99);
+  pointer-events: none;
+  z-index: 6;
+  animation: sparkle-dot-twinkle 2.2s ease-in-out infinite;
+}
+
+@keyframes sparkle-dot-twinkle {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: scale(0.5);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.25);
+  }
+}
+
+/* ── Soft pulse glow behind logo ── */
+.atom-logo-pulse-glow {
+  background: color-mix(in srgb, var(--atom-color, #22c55e) 20%, transparent);
+  animation: atom-logo-pulse-glow 2.8s ease-in-out infinite;
+}
+
+@keyframes atom-logo-pulse-glow {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: translate(-50%, -50%) scale(0.85);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.15);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .product-orbit-loader::before,
+  .product-orbit-loader::after,
+  .sparkle-dot,
+  .atom-logo-pulse-glow,
+  .recent-purchases-track {
+    animation: none;
+  }
+}
+
+/* สินค้าที่ซื้อล่าสุด — marquee แบบ INFICOZ */
+.recent-purchases-mask {
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 4%,
+    black 96%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 4%,
+    black 96%,
+    transparent 100%
+  );
+}
+
+.recent-purchases-track {
+  display: flex;
+  width: max-content;
+  height: 72px;
+  overflow-y: hidden;
+  animation: recent-purchases-scroll var(--recent-purchases-duration, 60s) linear
+    infinite;
+}
+
+.recent-purchases-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes recent-purchases-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Admin <select> — dark popup list, readable options (Windows/Chrome) */
+select.bw-admin-select {
+  color-scheme: dark;
+}
+
+select.bw-admin-select option {
+  background-color: #0a0a0a;
+  color: #ffffff;
+  font-weight: 500;
+}

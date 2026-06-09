@@ -1,0 +1,48 @@
+.address {
+  display: flex;
+  justify-content: space-between;
+}
+
+.empty {
+  text-align: center;
+  padding: 80rpx 0;
+}
+
+.item .row {
+  margin-top: 12rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.qty {
+  display: flex;
+  gap: 12rpx;
+  align-items: center;
+}
+
+.qty button {
+  width: 48rpx;
+  height: 48rpx;
+  padding: 0;
+  margin: 0;
+  line-height: 48rpx;
+}
+
+.footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #fff;
+  padding: 24rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 -4rpx 20rpx rgba(0, 0, 0, 0.06);
+}
+
+.submit {
+  width: 240rpx;
+  padding: 20rpx;
+}

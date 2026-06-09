@@ -1,0 +1,26 @@
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+}
+
+.avatar {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  background: #eee;
+}
+
+.name {
+  font-size: 34rpx;
+  font-weight: 600;
+}
+
+.menu-item {
+  padding: 24rpx 0;
+  border-bottom: 1rpx solid #eee;
+}
+
+.menu-item.danger {
+  color: #e64340;
+}

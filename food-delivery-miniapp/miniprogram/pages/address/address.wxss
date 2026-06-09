@@ -1,0 +1,10 @@
+.item {
+  margin-bottom: 16rpx;
+}
+
+.form input {
+  border: 1rpx solid #eee;
+  padding: 20rpx;
+  margin-bottom: 16rpx;
+  border-radius: 8rpx;
+}

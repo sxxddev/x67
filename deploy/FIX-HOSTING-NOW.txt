@@ -1,0 +1,44 @@
+x67secretme.shop — แก้ 503/500 บน inwCloud (ทำใน DirectAdmin Terminal)
+
+=== ผลตรวจจาก PC ของคุณ (วันนี้) ===
+- DNS + SSL + Cloudflare: ใช้ได้
+- เว็บตอบกลับ HTTP 500 (ดีขึ้นจาก 503 = app เริ่มรันแล้ว แต่ error ตอนโหลดหน้า)
+- ช้ามาก ~40 วินาทีต่อ request = มักเป็น DB/env ผิด หรือยังไม่ build บน Linux
+- SSH จาก PC เข้า server ไม่ได้ (inwCloud บล็อก) — ต้องทำใน Terminal ของ DirectAdmin
+
+=== ขั้น 1: อัปโหลดไฟล์จาก PC ===
+Upload ไปที่ nextjs/ บน server:
+  - server.js (ล่าสุด)
+  - scripts/fix-hosting-on-server.sh
+
+=== ขั้น 2: รันสคริปต์แก้ (copy ทั้งก้อน) ===
+
+source /home/in8lx67secre/nodevenv/domains/x67secretme.shop/nextjs/20/bin/activate
+cd /home/in8lx67secre/domains/x67secretme.shop/nextjs
+chmod +x scripts/fix-hosting-on-server.sh
+./scripts/fix-hosting-on-server.sh
+
+=== ขั้น 3: Environment Variables ใน Setup Node.js App ===
+กด ADD VARIABLE ใส่ทุกอัน (Passenger มักไม่อ่าน .env เอง):
+
+NODE_ENV          = production
+DATABASE_URL      = (copy จาก .env บน server — ต้องเป็น in8lx67secre_shop ไม่ใช่ root)
+AUTH_SECRET       = (copy จาก .env)
+AUTH_URL          = https://x67secretme.shop
+NEXTAUTH_URL      = https://x67secretme.shop
+NEXTAUTH_SECRET   = (copy จาก .env)
+
+=== ขั้น 4: Restart ===
+Setup Node.js App -> Production -> startup server.js -> STOP -> RESTART
+อย่ารัน node server.js ค้างใน Terminal พร้อมกับ panel
+
+=== ขั้น 5: ทดสอบ ===
+เปิด https://x67secretme.shop
+หรือกด OPEN ใน Node.js App
+
+=== ถ้ายัง error ===
+ดู log ใน File Manager:
+  nextjs/hosting-diagnose.log
+  ~/logs/error.log
+
+copy ข้อความ error ส่งมา

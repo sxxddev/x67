@@ -1,0 +1,21 @@
+# ไฟล์ scripts/fix-hosting-on-server.sh ยังไม่อยู่บน server
+# Copy คำสั่งด้านล่างทีละบล็อก วางใน DirectAdmin Terminal
+
+# === บล็อก 1: เข้าโฟลเดอร์ ===
+source /home/in8lx67secre/nodevenv/domains/x67secretme.shop/nextjs/20/bin/activate
+cd /home/in8lx67secre/domains/x67secretme.shop/nextjs
+
+# === บล็อก 2: เช็ก .env (ต้องมี DATABASE_URL จริง ไม่ใช่ DB_USER) ===
+grep DATABASE_URL .env
+
+# === บล็อก 3: install + prisma + build ใหม่บน Linux ===
+npm install --omit=dev --ignore-scripts
+npm install dotenv
+npx prisma generate
+rm -rf .next
+npm run build
+
+# === บล็อก 4: ทดสอบว่ารันได้ (เห็น Next.js ready แล้วกด Ctrl+C) ===
+node server.js
+
+# หลัง Ctrl+C ไป Setup Node.js App -> RESTART (อย่ารัน node ค้างไว้)

@@ -1,0 +1,4 @@
+{
+  "desc": "Sitemap configuration for WeChat mini program",
+  "rules": [{ "action": "allow", "page": "*" }]
+}

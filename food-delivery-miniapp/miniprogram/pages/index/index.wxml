@@ -1,0 +1,19 @@
+<view class="container">
+  <view wx:if="{{loading}}" class="text-muted">กำลังโหลด...</view>
+  <view wx:elif="{{products.length === 0}}" class="text-muted">ยังไม่มีสินค้า</view>
+  <block wx:else>
+    <view class="card product" wx:for="{{products}}" wx:key="id" bindtap="goProduct" data-id="{{item.id}}">
+      <view class="row">
+        <image class="thumb" src="{{item.image_url || '/images/placeholder.png'}}" mode="aspectFill" />
+        <view class="info">
+          <view class="name">{{item.name}}</view>
+          <view class="desc text-muted">{{item.description}}</view>
+          <view class="bottom">
+            <text class="price">฿{{item.price}}</text>
+            <button class="add-btn" catchtap="addCart" data-item="{{item}}">+</button>
+          </view>
+        </view>
+      </view>
+    </view>
+  </block>
+</view>

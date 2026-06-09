@@ -1,0 +1,30 @@
+<view class="container">
+  <view class="card address" bindtap="goAddress">
+    <text>{{addressText}}</text>
+    <text class="arrow">></text>
+  </view>
+
+  <view wx:if="{{cart.length === 0}}" class="text-muted empty">ตะกร้าว่าง</view>
+  <block wx:else>
+    <view class="card item" wx:for="{{cart}}" wx:key="product_id">
+      <view class="name">{{item.name}}</view>
+      <view class="row">
+        <text class="price">฿{{item.price}}</text>
+        <view class="qty">
+          <button data-index="{{index}}" data-type="minus" bindtap="changeQty">-</button>
+          <text>{{item.quantity}}</text>
+          <button data-index="{{index}}" data-type="plus" bindtap="changeQty">+</button>
+        </view>
+      </view>
+    </view>
+
+    <view class="card">
+      <input placeholder="หมายเหตุ" bindinput="onRemarkInput" />
+    </view>
+
+    <view class="footer">
+      <text>รวม <text class="price">฿{{total}}</text></text>
+      <view class="btn-primary submit" bindtap="submitOrder">ชำระเงิน</view>
+    </view>
+  </block>
+</view>

@@ -1,0 +1,15 @@
+<view class="container" wx:if="{{order}}">
+  <view class="card">
+    <view>สถานะ: {{order.statusText}}</view>
+    <view class="text-muted">เลขออเดอร์: {{order.order_no}}</view>
+    <view class="text-muted">ร้าน: {{order.store_name}}</view>
+    <view class="price">รวม ฿{{order.total_amount}}</view>
+  </view>
+  <view class="card">
+    <view class="title">รายการสินค้า</view>
+    <view class="item" wx:for="{{order.items}}" wx:key="id">
+      <text>{{item.product_name}} x{{item.quantity}}</text>
+      <text>฿{{item.subtotal}}</text>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>X67SECRETME</title>
+    <link rel="icon" href="Logo-_x67secretmeV2.png" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --accent: #ffffff;
+            --accent2: #a1a1aa;
+        }
+
+        /* LOADING SCREEN REDESIGN */
+        .loading-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: #09090b;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.8s;
+        }
+
+        .loading-screen.hide {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        /* Circular Loader Container */
+        .loader-container {
+            position: relative;
+            width: 140px;
+            height: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Pulsing Aura Logo */
+        .loading-logo-wrap {
+            position: relative;
+            z-index: 10;
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .loading-logo {
+            width: 55px;
+            height: 55px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.4));
+            animation: pulseLogo 3s ease-in-out infinite;
+        }
+
+        .logo-aura {
+            position: absolute;
+            inset: -15px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: pulseAura 3s ease-in-out infinite;
+        }
+
+        /* Circular Progress Ring */
+        .progress-ring {
+            position: absolute;
+            inset: 0;
+            transform: rotate(-90deg);
+        }
+
+        .progress-ring circle {
+            fill: transparent;
+            stroke-width: 4;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 0.4s ease;
+        }
+
+        .ring-bg {
+            stroke: rgba(255, 255, 255, 0.1);
+        }
+
+        .ring-fill {
+            stroke: var(--accent);
+            filter: drop-shadow(0 0 8px var(--accent));
+        }
+
+        /* Loading Text & Status */
+        .loading-status-wrap {
+            margin-top: 35px;
+            text-align: center;
+            min-height: 40px;
+        }
+
+        .loading-title {
+            font-family: 'Kanit';
+            font-weight: 600;
+            font-size: 16px;
+            letter-spacing: 0.1em;
+            color: #fff;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .loading-status {
+            font-family: 'JetBrains Mono';
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.4);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        @keyframes pulseLogo {
+
+            0%,
+            100% {
+                transform: scale(1);
+                filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+            }
+
+            50% {
+                transform: scale(1.08);
+                filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.5));
+            }
+        }
+
+        @keyframes pulseAura {
+
+            0%,
+            100% {
+                transform: scale(0.9);
+                opacity: 0.4;
+            }
+
+            50% {
+                transform: scale(1.2);
+                opacity: 0.6;
+            }
+        }
+
+        /* PARTICLES */
+        .particles-container {
+            position: fixed;
+            inset: 0;
+            z-index: 40;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .particle-logo {
+            position: absolute;
+            pointer-events: none;
+            will-change: transform;
+            animation: particleFall linear forwards;
+            object-fit: contain;
+            background: transparent;
+        }
+
+        .brand-logo {
+            object-fit: contain;
+            background: transparent !important;
+        }
+
+        @keyframes particleFall {
+            0% {
+                transform: translateY(-40px) rotate(0deg);
+            }
+
+            100% {
+                transform: translateY(calc(100vh + 40px)) rotate(360deg);
+            }
+        }
+
+        /* THEME OVERRIDES - Space Theme */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            background:
+                radial-gradient(ellipse 70% 50% at 30% 20%, rgba(255, 255, 255, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse 60% 40% at 70% 60%, rgba(255, 255, 255, 0.04) 0%, transparent 50%),
+                radial-gradient(ellipse 50% 50% at 50% 90%, rgba(255, 255, 255, 0.03) 0%, transparent 50%),
+                linear-gradient(180deg, #0a0a0a 0%, #050505 50%, #0a0a0a 100%);
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            z-index: -1;
+            pointer-events: none;
+            top: -20%;
+            right: -10%;
+            width: 60%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 60%);
+            filter: blur(60px);
+        }
+
+        .glass-card,
+        .section-card {
+            background: rgba(17, 17, 17, 0.7) !important;
+            backdrop-filter: blur(12px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.05) !important;
+        }
+
+        aside {
+            background: rgba(9, 9, 11, 0.9) !important;
+            border-right: 1px solid rgba(255, 255, 255, 0.05) !important;
+        }
+    </style>
+</head>
+
+<body class="text-zinc-100 font-['Kanit'] antialiased overflow-hidden h-screen w-screen selection:bg-zinc-500/30">
+
+
+
+    <!-- PARTICLES -->
+    <div class="particles-container" id="particlesContainer"></div>
+
+    <div id="toast-container" class="fixed top-5 right-5 z-[100] flex flex-col gap-2"></div>
+
+    <!-- App View - Floating Overlay -->
+    <div class="control-panel glass-card" id="mainPanel">
+        <!-- Drag Handle Area -->
+        <div class="panel-handle" id="panelHandle"></div>
+
+        <div id="app-view" class="flex h-full w-full relative z-10 transition-all duration-500">
+
+            <aside class="w-64 flex flex-col justify-between backdrop-blur-xl">
+                <div>
+                    <div class="h-20 flex items-center px-6 border-b border-white/5 gap-4">
+                        <img src="Logo-_x67secretmeV2.png"
+                            class="brand-logo w-12 h-12 drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">
+                        <span class="font-bold text-lg tracking-tight text-white drop-shadow-md">X67SECRETME</span>
+                    </div>
+
+                    <nav class="p-4 space-y-1">
+                        <p class="px-3 text-[10px] font-bold text-zinc-500 uppercase tracking-wider mb-2">FEATURES</p>
+
+                        <button onclick="App.route('aimbot')" id="nav-aimbot" class="nav-item active">
+                            <i class="fa-solid fa-bullseye w-5"></i> AIMBOT
+                        </button>
+                        <button onclick="App.route('visuals')" id="nav-visuals" class="nav-item">
+                            <div class="icon-box"><i class="fa-solid fa-eye"></i></div>
+                            <span>SETTING</span>
+                        </button>
+
+                        <p class="px-4 text-[11px] font-bold text-zinc-500 uppercase tracking-widest mt-6 mb-2">
+                            CONFIGURATION
+                        </p>
+                        <button onclick="App.route('presets')" id="nav-presets" class="nav-item">
+                            <div class="icon-box"><i class="fa-solid fa-sliders"></i></div>
+                            <span>PRESETS</span>
+                        </button>
+                        <button onclick="App.route('settings')" id="nav-settings" class="nav-item">
+                            <div class="icon-box"><i class="fa-solid fa-gear"></i></div>
+                            <span>SYSTEM</span>
+                        </button>
+                    </nav>
+                </div>
+
+                <div class="p-4 border-t border-white/5 bg-white/5 backdrop-blur-md m-4 rounded-xl">
+                    <div class="flex items-center gap-3">
+                        <img id="user-avatar"
+                            src="Logo-_x67secretmeV2.png"
+                            class="brand-logo w-10 h-10 rounded-full border-2 border-white/10 shadow-lg object-contain">
+                        <div class="flex-1 overflow-hidden">
+                            <p id="user-name" class="text-sm font-bold text-white truncate">X67SECRETME</p>
+                            <p class="text-[10px] text-green-400 flex items-center gap-1.5 font-medium">
+                                <span
+                                    class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]"></span>ปลอดภัย
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <main class="flex-1 flex flex-col relative overflow-hidden bg-transparent">
+                <!-- Background Elements -->
+                <div
+                    class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 pointer-events-none z-0">
+                </div>
+                <div
+                    class="absolute top-[-20%] left-[20%] w-[600px] h-[600px] bg-white/10 rounded-full blur-[120px] pointer-events-none z-0">
+                </div>
+                <div
+                    class="absolute bottom-[-20%] right-[10%] w-[500px] h-[500px] bg-zinc-500/10 rounded-full blur-[100px] pointer-events-none z-0">
+                </div>
+
+                <header
+                    class="h-20 border-b border-white/5 flex items-center justify-between px-8 bg-zinc-950/30 backdrop-blur-md sticky top-0 z-30">
+                    <div class="flex items-center gap-3">
+                        <div class="h-6 w-1 bg-gradient-to-b from-white to-transparent rounded-full"></div>
+                        <h2 id="page-title" class="text-xl font-bold text-white tracking-tight drop-shadow-md">เล็งเป้า
+                        </h2>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <span
+                            class="px-3 py-1 rounded-full bg-white/5 border border-white/5 text-[10px] font-bold text-zinc-400 font-mono tracking-wide">X67SECRETME</span>
+                    </div>
+                </header>
+
+                <div class="flex-1 overflow-y-auto p-8 custom-scrollbar">
+
+                    <!-- Aimbot Page -->
+                    <div id="page-aimbot" class="page-section animate-fade-in">
+                        <div class="max-w-4xl mx-auto space-y-6">
+                            <!-- General -->
+                            <div class="section-card">
+                                <div class="flex items-center justify-between mb-6">
+                                    <div>
+                                        <h3 class="text-base font-medium">ตั้งค่าทั่วไป</h3>
+                                        <p class="text-sm text-zinc-500">เปิดใช้ล็อคเป้า</p>
+                                    </div>
+                                    <label class="switch">
+                                        <input type="checkbox" id="aimbot-active" onchange="App.save(true)">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                <div class="pt-4 border-t border-zinc-800">
+                                    <label
+                                        class="block text-xs font-bold text-zinc-500 uppercase mb-2">ปุ่มใช้งาน</label>
+                                    <select id="aimbot-key" onchange="App.save(true)" class="custom-select w-full">
+                                        <option value="ALT">ALT</option>
+                                        <option value="SHIFT">SHIFT</option>
+                                        <option value="CTRL">CTRL</option>
+                                        <option value="SPACE">SPACE</option>
+                                        <option value="Left Mouse">Left Mouse</option>
+                                        <option value="Right Mouse" selected>Right Mouse</option>
+                                        <option value="Mouse 4">Mouse 4</option>
+                                        <option value="Mouse 5">ปุ่มเมาส์ 5</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Aim Settings -->
+                            <div class="section-card">
+                                <h3 class="text-base font-medium mb-4">ตั้งค่าการเล็ง</h3>
+                                <div class="space-y-6">
+                                    <div>
+                                        <div class="flex justify-between mb-2">
+                                            <label class="text-sm font-medium text-zinc-400">ระยะการล็อคเป้า
+                                                (FOV)</label>
+                                            <span id="val-aimbot-fov" class="text-sm font-mono text-white">35</span>
+                                        </div>
+                                        <input type="range" id="aimbot-fov" min="1" max="360" value="35"
+                                            class="range-slider w-full"
+                                            oninput="App.updateVal('val-aimbot-fov', this.value); App.save()">
+                                    </div>
+                                    <div>
+                                        <div class="flex justify-between mb-2">
+                                            <label class="text-sm font-medium text-zinc-400">ความสมูท</label>
+                                            <span id="val-aimbot-smooth" class="text-sm font-mono text-white">8</span>
+                                        </div>
+                                        <input type="range" id="aimbot-smooth-x-max" min="1" max="50" value="8"
+                                            class="range-slider w-full"
+                                            oninput="App.updateVal('val-aimbot-smooth', this.value); App.save()">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Offsets -->
+                            <div class="section-card">
+                                <h3 class="text-base font-medium mb-4">ตำแหน่งการล็อคหัว</h3>
+                                <div class="grid grid-cols-2 gap-6">
+                                    <div>
+                                        <label
+                                            class="block text-xs font-bold text-zinc-500 uppercase mb-2">ตำแหน่งแนวนอน
+                                            (px)</label>
+                                        <input type="number" id="aimbot-offset-x" value="0" min="-50" max="50"
+                                            oninput="App.save()"
+                                            class="w-full bg-zinc-900/50 border border-zinc-800 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-white font-mono">
+                                    </div>
+                                    <div>
+                                        <label
+                                            class="block text-xs font-bold text-zinc-500 uppercase mb-2">ตำแหน่งแนวตั้ง
+                                            (px)</label>
+                                        <input type="number" id="aimbot-offset-y" value="0" min="-50" max="50"
+                                            oninput="App.save()"
+                                            class="w-full bg-zinc-900/50 border border-zinc-800 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-white font-mono">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Visuals Page -->
+                    <div id="page-visuals" class="page-section hidden animate-fade-in">
+                        <div class="max-w-4xl mx-auto space-y-6">
+                            <div class="section-card">
+                                <h3 class="text-base font-medium mb-4">โหมดสีเป้า</h3>
+                                <div class="flex gap-4 justify-center py-4">
+                                    <button onclick="App.selectColor('purple')" id="color-purple"
+                                        class="w-16 h-16 rounded-xl bg-gradient-to-br from-purple-500 to-purple-700 ring-2 ring-transparent ring-offset-2 ring-offset-zinc-900 transition-all hover:scale-105"></button>
+                                    <button onclick="App.selectColor('yellow')" id="color-yellow"
+                                        class="w-16 h-16 rounded-xl bg-gradient-to-br from-yellow-400 to-yellow-600 ring-2 ring-transparent ring-offset-2 ring-offset-zinc-900 transition-all hover:scale-105"></button>
+                                    <button onclick="App.selectColor('red')" id="color-red"
+                                        class="w-16 h-16 rounded-xl bg-gradient-to-br from-red-500 to-red-700 ring-2 ring-transparent ring-offset-2 ring-offset-zinc-900 transition-all hover:scale-105"></button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Presets Page -->
+                    <div id="page-presets" class="page-section hidden animate-fade-in">
+                        <div class="max-w-2xl mx-auto space-y-4">
+                            <div onclick="App.loadPreset('stealth')"
+                                class="p-6 glass-card border border-zinc-800 rounded-xl hover:bg-zinc-900/50 cursor-pointer transition-all">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h3 class="text-lg font-bold">เนียนๆ</h3>
+                                    <span
+                                        class="px-2 py-1 bg-zinc-800 rounded text-xs text-zinc-400 font-bold uppercase">เนียนจัด</span>
+                                </div>
+                                <p class="text-sm text-zinc-500">Aimbot: FOV 70, Smooth 7
+                                </p>
+                            </div>
+
+                            <div onclick="App.loadPreset('medium')"
+                                class="p-6 glass-card border border-zinc-800 rounded-xl hover:bg-zinc-900/50 cursor-pointer transition-all">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h3 class="text-lg font-bold">กลางๆ</h3>
+                                    <span
+                                        class="px-2 py-1 bg-zinc-800 rounded text-xs text-zinc-400 font-bold uppercase">กลางๆยิงชิวๆ</span>
+                                </div>
+                                <p class="text-sm text-zinc-500">Aimbot: FOV 150, Smooth 5
+                                </p>
+                            </div>
+
+                            <div onclick="App.loadPreset('aggressive')"
+                                class="p-6 glass-card border border-zinc-800 rounded-xl hover:bg-zinc-900/50 cursor-pointer transition-all">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h3 class="text-lg font-bold">เต็มบบ</h3>
+                                    <span
+                                        class="px-2 py-1 bg-zinc-800 rounded text-xs text-zinc-400 font-bold uppercase">ลั่นทุ่ง</span>
+                                </div>
+                                <p class="text-sm text-zinc-500">Aimbot: FOV 300, Smooth 1
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Settings Page -->
+                    <div id="page-settings" class="page-section hidden animate-fade-in">
+                        <div class="max-w-2xl mx-auto section-card">
+                            <h3 class="text-base font-medium mb-6">ตั้งค่าระบบ</h3>
+                            <div class="space-y-4">
+                                <div class="p-4 border border-zinc-800 rounded-lg flex justify-between items-center">
+                                    <div>
+                                        <p class="text-sm text-white font-medium">การจัดการข้อมูล</p>
+                                        <p class="text-xs text-zinc-500">บันทึกหรือรีเซ็ตการตั้งค่าปัจจุบันของคุณ</p>
+                                    </div>
+                                    <div class="flex gap-2">
+                                        <button onclick="App.reset()"
+                                            class="px-3 py-1.5 text-xs font-medium bg-red-500/10 text-red-500 rounded border border-red-500/20 hover:bg-red-500/20 transition">รีเซ็ต</button>
+                                        <button onclick="App.save(true)"
+                                            class="px-3 py-1.5 text-xs font-medium bg-white text-black rounded hover:bg-zinc-200 transition">บันทึกทั้งหมด</button>
+                                    </div>
+                                </div>
+
+                                <div class="p-4 border border-zinc-800 rounded-lg flex justify-between items-center">
+                                    <div>
+                                        <p class="text-sm text-white font-medium">แอปพลิเคชัน</p>
+                                        <p class="text-xs text-zinc-500">ปิดโปรแกรมทั้งหมดทันที</p>
+                                    </div>
+                                    <button onclick="App.shutdown()"
+                                        class="px-3 py-1.5 text-xs font-medium bg-zinc-800 text-zinc-300 rounded hover:bg-zinc-700 transition">ปิดโปรแกรม</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,9 @@
+packages:
+  - "."
+
+allowBuilds:
+  prisma: true
+  "@prisma/engines": true
+  bcrypt: true
+  sharp: true
+  esbuild: set this to true or false

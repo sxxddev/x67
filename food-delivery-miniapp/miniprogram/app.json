@@ -1,0 +1,42 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/product/product",
+    "pages/cart/cart",
+    "pages/order/order",
+    "pages/order-detail/order-detail",
+    "pages/profile/profile",
+    "pages/address/address"
+  ],
+  "window": {
+    "navigationBarTitleText": "สั่งอาหาร",
+    "navigationBarBackgroundColor": "#111111",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#f5f5f5"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#111111",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "หน้าแรก"
+      },
+      {
+        "pagePath": "pages/cart/cart",
+        "text": "ตะกร้า"
+      },
+      {
+        "pagePath": "pages/order/order",
+        "text": "ออเดอร์"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "ของฉัน"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

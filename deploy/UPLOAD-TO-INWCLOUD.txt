@@ -1,0 +1,40 @@
+x67secretme.shop — อัปโหลดขึ้น inwCloud (ทำบน PC แล้ว upload)
+
+=== ไฟล์ที่ได้จาก PC ===
+  deploy\x67secretme-hosting.zip   <- อัปโหลดไฟล์นี้
+  deploy\database.sql              <- import ใน phpMyAdmin
+
+=== ขั้นที่ 1: MySQL บน DirectAdmin ===
+  1. เข้า https://svth01.inwcloud.shop:2222
+  2. MySQL Management -> สร้าง Database + User
+  3. phpMyAdmin -> เลือก DB -> Import -> เลือก database.sql
+
+=== ขั้นที่ 2: อัปโหลดเว็บ ===
+  1. File Manager -> /domains/x67secretme.shop/
+  2. สร้างโฟลเดอร์ nextjs
+  3. Upload x67secretme-hosting.zip เข้า nextjs
+  4. Extract (แตก zip)
+  5. ลบ index.html ใน public_html (หน้า placeholder)
+
+=== ขั้นที่ 3: แก้ .env ===
+  เปิด /domains/x67secretme.shop/nextjs/.env
+  แก้ DATABASE_URL เป็น user/pass/db ของ hosting
+
+=== ขั้นที่ 4: Node.js (ถ้ามีใน DirectAdmin) ===
+  Setup Node.js App:
+    Root: /domains/x67secretme.shop/nextjs
+    Node 18+
+    Command: npm start
+
+  SSH / Terminal:
+    cd ~/domains/x67secretme.shop/nextjs
+    chmod +x install-on-server.sh
+    ./install-on-server.sh
+
+=== ขั้นที่ 5: ปิดคอมได้ ===
+  หยุด START-website.bat ที่บ้าน
+  ปิด Cloudflare Tunnel บนคอม (ใช้ DNS ของ hosting แทน)
+
+=== ถ้าไม่มีเมนู Node.js ===
+  แจ้ง inwCloud support หรืออัปเกรด VPS
+  Shared hosting แบบ PHP-only รัน Next.js ไม่ได้

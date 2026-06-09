@@ -1,0 +1,18 @@
+{
+  "programs": [
+    {
+      "id": "cmdv3",
+      "name": "CMD V3 PREMIUM",
+      "description": "สามารถเล่นได้ทุกประเทศ — รองรับทุกเซิร์ฟเวอร์",
+      "image": "https://i.postimg.cc/mD8T1hH6/cmdv3.png",
+      "status": "undetected"
+    },
+    {
+      "id": "skynet",
+      "name": "CMD SKYNET",
+      "description": "ครบจบในตัวเดียว — ใช้งานง่าย มีหลายฟังก์ชัน",
+      "image": "https://i.postimg.cc/Qtx8C78n/skynet.png",
+      "status": "undetected"
+    }
+  ]
+}

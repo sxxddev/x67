@@ -1,0 +1,20 @@
+=== หลังอัปโหลด zip แล้ว Extract ใน nextjs/ ===
+
+ขั้น 1 — DirectAdmin File Manager
+  Upload: deploy\x67secretme-hosting.zip
+  ไปที่: domains/x67secretme.shop/nextjs/
+  Extract (แตก zip) — เลือก Overwrite ไฟล์เก่า
+  อย่าลบ .env เดิมถ้า DATABASE_URL ถูกแล้ว
+
+ขั้น 2 — Terminal (copy ทั้งก้อน)
+source /home/in8lx67secre/nodevenv/domains/x67secretme.shop/nextjs/20/bin/activate
+cd /home/in8lx67secre/domains/x67secretme.shop/nextjs
+chmod +x setup.sh
+./setup.sh
+
+ขั้น 3 — Setup Node.js App
+  ADD VARIABLE: NODE_ENV, DATABASE_URL, AUTH_SECRET, AUTH_URL, NEXTAUTH_URL, NEXTAUTH_SECRET
+  (ดูค่าใน PANEL-ENV-VARS.txt หรือ copy จาก .env)
+  Startup: server.js | Production | RESTART
+
+เปิด: https://x67secretme.shop

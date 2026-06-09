@@ -1,0 +1,6 @@
+NODE_ENV=production
+DATABASE_URL=(จาก .env บน server)
+AUTH_SECRET=(จาก .env)
+AUTH_URL=https://x67secretme.shop
+NEXTAUTH_URL=https://x67secretme.shop
+NEXTAUTH_SECRET=(จาก .env)

@@ -1,0 +1,14 @@
+<view class="container">
+  <view wx:if="{{loading}}" class="text-muted">กำลังโหลด...</view>
+  <view wx:elif="{{orders.length === 0}}" class="text-muted empty">ยังไม่มีออเดอร์ กรุณาเข้าสู่ระบบและสั่งซื้อ</view>
+  <block wx:else>
+    <view class="card order" wx:for="{{orders}}" wx:key="id" bindtap="goDetail" data-id="{{item.id}}">
+      <view class="row">
+        <text>{{item.store_name}}</text>
+        <text>{{item.statusText}}</text>
+      </view>
+      <view class="text-muted">เลขออเดอร์: {{item.order_no}}</view>
+      <view class="price">฿{{item.total_amount}}</view>
+    </view>
+  </block>
+</view>

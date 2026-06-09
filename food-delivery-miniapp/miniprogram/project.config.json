@@ -1,0 +1,16 @@
+{
+  "description": "Food delivery mini program",
+  "packOptions": {
+    "ignore": []
+  },
+  "setting": {
+    "urlCheck": false,
+    "es6": true,
+    "postcss": true,
+    "minified": true
+  },
+  "compileType": "miniprogram",
+  "appid": "touristappid",
+  "projectname": "food-delivery-miniapp",
+  "miniprogramRoot": "./"
+}

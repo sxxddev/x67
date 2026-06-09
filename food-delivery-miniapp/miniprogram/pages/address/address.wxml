@@ -1,0 +1,15 @@
+<view class="container">
+  <view class="card item" wx:for="{{list}}" wx:key="id" bindtap="selectAddress" data-index="{{index}}">
+    <view>{{item.name}} {{item.phone}}</view>
+    <view class="text-muted">{{item.detail}}</view>
+  </view>
+
+  <view class="btn-primary" bindtap="toggleForm">เพิ่มที่อยู่</view>
+
+  <view class="card form" wx:if="{{showForm}}">
+    <input placeholder="ชื่อ" data-field="name" bindinput="onInput" />
+    <input placeholder="เบอร์โทร" data-field="phone" bindinput="onInput" />
+    <input placeholder="ที่อยู่ละเอียด" data-field="detail" bindinput="onInput" />
+    <view class="btn-primary" bindtap="saveAddress">บันทึก</view>
+  </view>
+</view>

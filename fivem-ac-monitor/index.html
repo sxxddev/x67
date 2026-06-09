@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEVLUCAS | สถานะโปรแกรม</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div id="auth-gate" class="auth-overlay auth-overlay--hidden">
+        <div class="auth-card-split">
+            <button type="button" class="auth-close" id="btn-close-auth" onclick="hideAuthGate()"><i class="fa-solid fa-xmark"></i></button>
+            <aside class="auth-aside">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/FiveM-Logo.png/1920px-FiveM-Logo.png" alt="FiveM Logo" style="width: 56px; object-fit: contain; margin-bottom: 16px; filter: drop-shadow(0 0 12px rgba(59,130,246,0.6));">
+                <div class="auth-aside-brand">DEVLUCAS</div>
+                <p class="auth-aside-title">เริ่มต้นง่ายๆ</p>
+                <p class="auth-aside-lead">สมัครฟรี เพื่อเข้าใช้งานระบบตรวจสอบเซิร์ฟเวอร์ไทยแบบเรียลไทม์ — และติดตามสถานะโปรแกรมได้ทันที</p>
+            </aside>
+            <div class="auth-panel-wrap">
+                <p class="auth-error" id="auth-error" hidden></p>
+
+                <div id="auth-panel-login" class="auth-panel">
+                    <h2 class="auth-panel-title">เข้าสู่ระบบ</h2>
+                    <p class="auth-panel-sub">ยินดีต้อนรับกลับมา 👋</p>
+                    <form id="form-login" class="auth-form" autocomplete="on">
+                        <label class="auth-field-label">ชื่อผู้ใช้</label>
+                        <div class="auth-input-wrap">
+                            <i class="fa-solid fa-user auth-input-icon"></i>
+                            <input type="text" name="username" placeholder="กรอกชื่อผู้ใช้" required minlength="3" maxlength="32" autocomplete="username">
+                        </div>
+                        <label class="auth-field-label">รหัสผ่าน</label>
+                        <div class="auth-input-wrap">
+                            <i class="fa-solid fa-lock auth-input-icon"></i>
+                            <input type="password" name="password" id="login-password" placeholder="กรอกรหัสผ่าน" required minlength="6" autocomplete="current-password">
+                            <button type="button" class="auth-toggle-pw" data-target="login-password" aria-label="แสดงรหัสผ่าน"><i class="fa-regular fa-eye"></i></button>
+                        </div>
+                        <label class="auth-remember"><input type="checkbox" name="remember" id="login-remember"> จดจำฉันไว้</label>
+                        <button type="submit" class="auth-submit auth-submit-primary"><i class="fa-solid fa-right-to-bracket"></i> เข้าสู่ระบบ</button>
+                    </form>
+                    <p class="auth-footer-link">ยังไม่มีบัญชี? <button type="button" class="auth-link" id="link-to-register">สร้างบัญชีใหม่</button></p>
+                </div>
+
+                <div id="auth-panel-register" class="auth-panel" hidden>
+                    <h2 class="auth-panel-title">สร้างบัญชีใหม่</h2>
+                    <p class="auth-panel-sub">กรอกข้อมูลด้านล่างเพื่อเริ่มต้นใช้งาน</p>
+                    <form id="form-register" class="auth-form" autocomplete="on">
+                        <label class="auth-field-label">ชื่อผู้ใช้</label>
+                        <div class="auth-input-wrap">
+                            <i class="fa-solid fa-user auth-input-icon"></i>
+                            <input type="text" name="username" placeholder="กรอกชื่อผู้ใช้ที่ต้องการ" required minlength="3" maxlength="32" autocomplete="username">
+                        </div>
+                        <label class="auth-field-label">รหัสผ่าน</label>
+                        <div class="auth-input-wrap">
+                            <i class="fa-solid fa-lock auth-input-icon"></i>
+                            <input type="password" name="password" id="reg-password" placeholder="กรอกรหัสผ่าน" required minlength="6" autocomplete="new-password">
+                            <button type="button" class="auth-toggle-pw" data-target="reg-password" aria-label="แสดงรหัสผ่าน"><i class="fa-regular fa-eye"></i></button>
+                        </div>
+                        <label class="auth-field-label">ยืนยันรหัสผ่าน</label>
+                        <div class="auth-input-wrap">
+                            <i class="fa-solid fa-lock auth-input-icon"></i>
+                            <input type="password" name="password2" id="reg-password2" placeholder="กรอกรหัสผ่านอีกครั้ง" required minlength="6" autocomplete="new-password">
+                            <button type="button" class="auth-toggle-pw" data-target="reg-password2" aria-label="แสดงรหัสผ่าน"><i class="fa-regular fa-eye"></i></button>
+                        </div>
+                        <button type="submit" class="auth-submit auth-submit-primary"><i class="fa-solid fa-user-plus"></i> สมัครสมาชิก</button>
+                    </form>
+                    <p class="auth-footer-link">มีบัญชีอยู่แล้ว? <button type="button" class="auth-link" id="link-to-login">เข้าสู่ระบบ</button></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Modal -->
+    <div id="admin-modal" class="auth-overlay auth-overlay--hidden" style="z-index:9999;">
+        <div class="auth-panel-wrap" style="max-width: 600px; width: 90%; border-radius: 12px; background: #15151b; position:relative; margin: 2rem auto;">
+            <button type="button" class="auth-toggle-pw" style="position:absolute; top:20px; right:20px;" onclick="document.getElementById('admin-modal').classList.add('auth-overlay--hidden')"><i class="fa-solid fa-xmark" style="font-size:1.5rem;"></i></button>
+            <h2 class="auth-panel-title" style="margin-top:10px;"><i class="fa-solid fa-screwdriver-wrench" style="color:#60a5fa;"></i> ระบบหลังบ้าน (Admin)</h2>
+            <p class="auth-panel-sub" style="margin-bottom: 1.5rem;">เฉพาะเจ้าของเว็บไซต์ (Admin) เท่านั้น</p>
+            
+            <div style="display: flex; gap: 15px; margin-bottom: 20px;">
+               <div class="stat-box" style="flex:1; padding:15px; background:#0c0c10; border: 1px solid var(--border-color);"><div class="stat-info"><h2 style="font-size:1.8rem;"><span id="admin-total-users" style="color:#60a5fa;">0</span></h2><span>บัญชีทั้งหมด</span></div></div>
+            </div>
+            
+            <h3 style="font-size: 0.95rem; margin-bottom: 8px; color:var(--text-main);">ผู้ใช้งานในระบบ</h3>
+            <div style="background: #0c0c10; padding: 12px; border-radius: 8px; max-height: 120px; overflow-y: auto; margin-bottom: 20px; font-size: 0.85rem; border: 1px solid var(--border-color);" id="admin-users-list">กำลังโหลด...</div>
+            
+            <h3 style="font-size: 0.95rem; margin-bottom: 8px; color:var(--text-main);">ประวัติการเข้าเรียน/สมัคร</h3>
+            <div style="background: #0c0c10; padding: 12px; border-radius: 8px; max-height: 200px; overflow-y: auto; font-size: 0.85rem; border: 1px solid var(--border-color);" id="admin-logs-list">กำลังโหลด...</div>
+        </div>
+    </div>
+
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <div class="nav-left">
+            <div class="nav-logo" onclick="switchPage('home')" style="cursor:pointer;">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/FiveM-Logo.png/1920px-FiveM-Logo.png" alt="FiveM Logo" class="nav-logo-img">
+                <span class="nav-brand">DEVLUCAS</span>
+            </div>
+            <span class="nav-item active" id="nav-item-home" onclick="switchPage('home')" style="cursor:pointer;"><i class="fa-solid fa-house"></i> หน้าหลัก</span>
+            <span class="nav-item" id="nav-item-status" onclick="switchPage('status')" style="cursor:pointer;"><i class="fa-solid fa-server"></i> สถานะโปรแกรม</span>
+        </div>
+        <div class="nav-right">
+            <button type="button" class="nav-btn btn-login-ghost" id="btn-login-main" onclick="showAuthGate('login')"><i class="fa-solid fa-right-to-bracket"></i> เข้าสู่ระบบ</button>
+            <button type="button" class="nav-btn btn-register-solid" id="btn-register-main" onclick="showAuthGate('register')"><i class="fa-solid fa-user-plus"></i> สมัครสมาชิก</button>
+            <button type="button" class="nav-btn btn-login" id="btn-admin" style="background:rgba(59,130,246,0.15); border-color:rgba(59,130,246,0.3); color:#60a5fa;" hidden><i class="fa-solid fa-screwdriver-wrench"></i> ระบบหลังบ้าน</button>
+            <span class="nav-user" id="nav-user"></span>
+            <button type="button" class="nav-btn btn-logout-red" id="btn-logout" hidden><i class="fa-solid fa-right-from-bracket"></i> ออกจากระบบ</button>
+        </div>
+    </nav>
+
+    <div id="app-shell">
+    <main class="container">
+        <!-- ================= PAGE HOME ================= -->
+        <div id="page-home">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-container">
+                <div class="hero-content">
+                    <div class="hero-badge">
+                        <i class="fa-solid fa-bolt text-blue"></i> ระบบจำหน่ายอัตโนมัติ 24/7
+                    </div>
+                    <h1 class="hero-title">
+                        DEVLUCAS<br>
+                        <span class="hero-highlight">ครบวงจร<br>ราคาจับต้องได้</span>
+                    </h1>
+                    <p class="hero-desc">
+                        ซื้อง่าย ได้ไว ใช้ลื่นๆ — โปรแกรมคุณภาพสำหรับเกม FiveM<br>และยังมีบริการเกมยอดฮิตอื่นๆ อีกเพียบ
+                    </p>
+                    <div class="hero-actions">
+                        <button class="hero-btn-primary" onclick="switchPage('status')">เริ่มต้นใช้งาน <i class="fa-solid fa-arrow-right"></i></button>
+                        <a href="https://discord.gg/MGjm6QxMb4" class="hero-btn-secondary" target="_blank"><i class="fa-brands fa-discord"></i> เข้า Discord</a>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <span class="stat-num" id="hero-stat-players">0</span>
+                            <span class="stat-label">ผู้เล่นทั้งหมด</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-num" id="hero-stat-servers">0</span>
+                            <span class="stat-label">เซิร์ฟเวอร์</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-num" id="hero-stat-active">0</span>
+                            <span class="stat-label">กำลังเปิด</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero-visual">
+                    <div class="orbit-wrap">
+                        <div class="orbit-center">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/FiveM-Logo.png/1920px-FiveM-Logo.png" alt="FiveM Logo" class="orbit-logo">
+                        </div>
+                        <div class="orbit orbit-1">
+                            <div class="orbit-item icon-1"><i class="fa-solid fa-shield-halved"></i></div>
+                        </div>
+                        <div class="orbit orbit-2">
+                            <div class="orbit-item item-1"><i class="fa-brands fa-discord"></i></div>
+                            <div class="orbit-item item-2"><i class="fa-solid fa-gamepad"></i></div>
+                        </div>
+                        <div class="orbit orbit-3">
+                            <div class="orbit-item icon-4"><i class="fa-solid fa-link"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        </div>
+
+        <!-- ================= PAGE STATUS ================= -->
+        <div id="page-status" hidden>
+        <!-- FiveM Servers Header -->
+        <div class="header-card" id="server-list-header">
+            <div class="header-content">
+                <div class="header-logo-container">
+                    <i class="fa-solid fa-gamepad"></i>
+                </div>
+                <div class="header-text">
+                    <h1>FiveM Servers</h1>
+                    <p>รายชื่อเซิร์ฟเวอร์ FiveM ไทย BY : DEV LUCAS</p>
+                </div>
+            </div>
+            <button class="btn-refresh" onclick="refreshData()"><i class="fa-solid fa-rotate-right"></i> รีเฟรช</button>
+            <!-- Glowing line at the top of header card -->
+            <div class="header-glow"></div>
+        </div>
+
+        <!-- 4 Stat Cards -->
+        <div class="stats-grid">
+            <div class="stat-box">
+                <div class="stat-icon-wrapper purple">
+                    <i class="fa-solid fa-server"></i>
+                </div>
+                <div class="stat-info">
+                    <h2 id="stat-servers">—</h2>
+                    <span>เซิร์ฟเวอร์</span>
+                </div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-icon-wrapper blue">
+                    <i class="fa-solid fa-users"></i>
+                </div>
+                <div class="stat-info">
+                    <h2 id="stat-players">—</h2>
+                    <span>ผู้เล่นทั้งหมด</span>
+                </div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-icon-wrapper green">
+                    <i class="fa-solid fa-signal"></i>
+                </div>
+                <div class="stat-info">
+                    <h2 id="stat-active">—</h2>
+                    <span>กำลังเปิด</span>
+                </div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-icon-wrapper orange">
+                    <i class="fa-solid fa-gamepad"></i>
+                </div>
+                <div class="stat-info">
+                    <h2 id="stat-gta5">—</h2>
+                    <span>GTA5</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- System Status -->
+        <div class="section-title" hidden>
+            <span class="title-text">SYSTEM STATUS</span>
+            <span class="last-update"><span class="dot green-dot"></span> อัปเดตล่าสุด: <span id="time-update">15:24:22</span></span>
+        </div>
+
+        <div class="status-big-grid" hidden>
+            <div class="status-box box-green">
+                <div class="status-glow-line bg-green"></div>
+                <div class="status-badge text-green"><span class="dot green-dot fade-anim"></span> UNDETECTED</div>
+                <div class="status-count text-green" id="count-undetected">—</div>
+                <div class="status-label">สถานะ</div>
+                <div class="status-desc desc-green">ใช้ได้ทุกประเทศ</div>
+            </div>
+            <div class="status-box box-yellow">
+                 <div class="status-glow-line bg-yellow"></div>
+                <div class="status-badge text-yellow"><span class="dot yellow-dot fade-anim"></span> WARNING</div>
+                <div class="status-count text-yellow" id="count-warning">—</div>
+                <div class="status-label">สถานะ</div>
+                <div class="status-desc desc-yellow">ใช้ได้บางเซิร์ฟเวอร์</div>
+            </div>
+            <div class="status-box box-red">
+                 <div class="status-glow-line bg-red"></div>
+                <div class="status-badge text-red"><span class="dot red-dot fade-anim"></span> STOP</div>
+                <div class="status-count text-red" id="count-stop">—</div>
+                <div class="status-label">สถานะ</div>
+                <div class="status-desc desc-red">กำลังดำเนินการแก้ไข</div>
+            </div>
+        </div>
+
+        <div class="status-small-grid">
+            <div class="small-product-box" style="padding-left: 2rem;">
+                <div class="product-info">
+                    <h3 style="font-size:1.15rem; margin-bottom:6px;"><i class="fa-solid fa-server text-blue" style="margin-right:8px;"></i> ระบบตรวจสอบเซิร์ฟเวอร์</h3>
+                    <p style="font-size:0.9rem; color:var(--text-muted);">แสดงจำนวนผู้เล่นและสถานะของเซิร์ฟเวอร์ FiveM ทั่วประเทศไทยแบบเรียลไทม์</p>
+                </div>
+                <div class="badge-status">
+                    <span class="dot green-dot"></span> Online
+                </div>
+            </div>
+            <div class="small-product-box" style="padding-left: 2rem;">
+                <div class="product-info">
+                    <h3 style="font-size:1.15rem; margin-bottom:6px;"><i class="fa-solid fa-shield-halved text-blue" style="margin-right:8px;"></i> วิเคราะห์ระบบป้องกัน</h3>
+                    <p style="font-size:0.9rem; color:var(--text-muted);">ตรวจสอบและแจ้งเตือนระบบกันโปรของแต่ละเซิร์ฟเวอร์ เพื่อเพิ่มความมั่นใจ</p>
+                </div>
+                <div class="badge-status">
+                    <span class="dot green-dot"></span> Active
+                </div>
+            </div>
+        </div>
+
+        <div class="error-banner" id="error-banner" hidden></div>
+        <div class="cache-banner" id="cache-banner" hidden></div>
+
+        <!-- Controls -->
+        <div class="controls-row">
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" id="searchInput" placeholder="ค้นหาชื่อ">
+            </div>
+            <div class="view-toggles">
+                <button type="button" class="toggle-btn active" id="btn-sort" title="เรียงตามจำนวนผู้เล่น"><i class="fa-solid fa-users"></i> ผู้เล่น</button>
+                <button type="button" class="toggle-btn" id="btn-layout" title="สลับมุมมองรายการ/ตาราง"><i class="fa-solid fa-list"></i> มุมมอง</button>
+            </div>
+        </div>
+
+        <div class="warning-banner">
+            <span class="warning-icon-wrapper"><i class="fa-solid fa-circle-exclamation text-yellow"></i></span>
+            <span class="warning-text">สถานะกันโปร (GHOSTX) เป็นข้อมูลเบื้องต้น อาจมีการเปลี่ยนแปลงตามการอัปเดตของเซิร์ฟเวอร์ | เพิ่มเติมทุกเซิร์ฟเวอร์ไม่ได้ใช้แค่กันโปร GhostX ยังมีกันโปรอื่นๆ อีกที่ทางเราไม่ได้บอกทั้งหมด เพราะว่ามันไม่สำคัญสำหรับโปรแกรมของทางเรา</span>
+        </div>
+
+        <div class="load-banner load-banner--list" id="load-banner" hidden>
+            <i class="fa-solid fa-spinner fa-spin"></i>
+            <span>กำลังโหลดรายการเซิร์ฟเวอร์…</span>
+        </div>
+
+        <!-- Server List -->
+        <div class="server-list" id="server-list">
+            <!-- Items generated by JS -->
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination" id="pagination"></div>
+
+        </div>
+    </main>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

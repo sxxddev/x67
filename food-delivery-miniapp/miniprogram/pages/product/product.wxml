@@ -1,0 +1,18 @@
+<view class="container" wx:if="{{product}}">
+  <image class="banner" src="{{product.image_url || '/images/placeholder.png'}}" mode="aspectFill" />
+  <view class="card">
+    <view class="name">{{product.name}}</view>
+    <view class="price">฿{{product.price}}</view>
+    <view class="text-muted">{{product.description}}</view>
+    <view class="store text-muted">ร้าน: {{product.store_name}}</view>
+  </view>
+  <view class="card qty-row">
+    <text>จำนวน</text>
+    <view class="qty">
+      <button bindtap="changeQty" data-type="minus">-</button>
+      <text>{{quantity}}</text>
+      <button bindtap="changeQty" data-type="plus">+</button>
+    </view>
+  </view>
+  <view class="btn-primary" bindtap="addCart">เพิ่มในตะกร้า</view>
+</view>
